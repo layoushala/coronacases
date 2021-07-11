@@ -100,7 +100,11 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
                 + "GROUP BY country LIMIT " + (pageNumber) + ", " + maxRes);
         query.setResultTransformer(Transformers.aliasToBean(CountryCase.class));
         List<CountryCase> countryList = (List<CountryCase>) query.list();
-       
+        int id = pageNumber * maxRes;
+        for (CountryCase countryCase : countryList) {
+            countryCase.setId(id);
+            id++;
+        }
         CountryPagination countryPagination = new CountryPagination( totalResults, countryList);
 
         return countryPagination;

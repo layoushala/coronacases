@@ -11,6 +11,8 @@ package com.ligadata.coronacases.helpermodel;
  */
 public class CountryCase {
     
+    private Number id;
+    
     private String country;
     
     private Number deathCases;
@@ -49,6 +51,14 @@ public class CountryCase {
 
     public void setRecoveredCases(Number recoveredCases) {
         this.recoveredCases = recoveredCases;
+    }
+
+    public Number getId() {
+        return id;
+    }
+
+    public void setId(Number id) {
+        this.id = id;
     }
     
     
