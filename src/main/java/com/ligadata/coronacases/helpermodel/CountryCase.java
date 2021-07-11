@@ -13,11 +13,11 @@ public class CountryCase {
     
     private String country;
     
-    private Integer deathCases;
+    private Number deathCases;
     
-    private Integer confirmedCases;
+    private Number confirmedCases;
     
-    private Integer recoveredCases;
+    private Number recoveredCases;
 
     public String getCountry() {
         return country;
@@ -27,27 +27,27 @@ public class CountryCase {
         this.country = country;
     }
 
-    public Integer getDeathCases() {
+    public Number getDeathCases() {
         return deathCases;
     }
 
-    public void setDeathCases(Integer deathCases) {
+    public void setDeathCases(Number deathCases) {
         this.deathCases = deathCases;
     }
 
-    public Integer getConfirmedCases() {
+    public Number getConfirmedCases() {
         return confirmedCases;
     }
 
-    public void setConfirmedCases(Integer confirmedCases) {
+    public void setConfirmedCases(Number confirmedCases) {
         this.confirmedCases = confirmedCases;
     }
 
-    public Integer getRecoveredCases() {
+    public Number getRecoveredCases() {
         return recoveredCases;
     }
 
-    public void setRecoveredCases(Integer recoveredCases) {
+    public void setRecoveredCases(Number recoveredCases) {
         this.recoveredCases = recoveredCases;
     }
     

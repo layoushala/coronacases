@@ -15,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,8 +34,9 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
         String filterValue = "";
         for (Map.Entry<String, String[]> entry : filters.entrySet()) {
             String filterId = entry.getKey();
-            filterValue = entry.getValue()[0];
+           
             if (filterId.equals("region")) {
+                filterValue = entry.getValue()[0];
                 filterValue = (filterValue == null) ? "" : filterValue.trim();
                 break;
 
@@ -44,7 +46,7 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
         Session session = sessionFactory.getCurrentSession();
 
         Query countQuery;
-        countQuery = session.createSQLQuery("SELECT  country,\n"
+        countQuery = session.createSQLQuery("SELECT count(*) from (SELECT  country,\n"
                 + "    sum(\n"
                 + "        CASE \n"
                 + "            WHEN c.name='Death Cases' \n"
@@ -66,8 +68,8 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
                 + "            ELSE NULL \n"
                 + "        END\n"
                 + "    ) AS 'Recovered Cases'\n"
-                + "FROM    ligadata_assignment.tbl_corona_cases c where region LIKE '" + "%" + filterValue + "%" + "'\n"
-                + "GROUP BY country;");
+                + "FROM    tbl_corona_cases c where region LIKE '" + "%" + filterValue + "%" + "'\n"
+                + "GROUP BY country) b;");
         Integer totalResults = ((BigInteger) countQuery.uniqueResult()).intValue();
         Query query = session.createSQLQuery("SELECT  country,\n"
                 + "    sum(\n"
