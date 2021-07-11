@@ -7,6 +7,7 @@ package com.ligadata.coronacases.service;
 
 import com.ligadata.coronacases.dao.ICoronaCaseDao;
 import com.ligadata.coronacases.helpermodel.CountryPagination;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,11 @@ public class CoronaCaseServiceImpl implements ICoronaCaseService{
     @Override
     public CountryPagination filterAllRewards(int pageNumber, int maxRes, Map<String, String[]> filters) {
         return coronaCaseDao.filterAllRewards(pageNumber, maxRes, filters);
+    }
+
+    @Override
+    public List<String> getRegions() {
+        return coronaCaseDao.getRegions();
     }
     
 }

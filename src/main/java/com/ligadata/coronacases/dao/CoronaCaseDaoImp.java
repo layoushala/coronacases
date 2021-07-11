@@ -7,13 +7,16 @@ package com.ligadata.coronacases.dao;
 
 import com.ligadata.coronacases.helpermodel.CountryCase;
 import com.ligadata.coronacases.helpermodel.CountryPagination;
+import com.ligadata.coronacases.model.CoronaCase;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +104,14 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
         CountryPagination countryPagination = new CountryPagination( totalResults, countryList);
 
         return countryPagination;
+    }
+
+    @Override
+    public List<String> getRegions() {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(CoronaCase.class);
+        criteria.setProjection(Projections.distinct( Projections.property( "region" ) ) );
+        
+        return criteria.list();
     }
 
 }

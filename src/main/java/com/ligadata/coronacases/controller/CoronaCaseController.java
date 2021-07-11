@@ -35,6 +35,11 @@ public class CoronaCaseController {
         return new ResponseEntity<>(countryPagination, HttpStatus.OK);
     }
     
+    @GetMapping("/regions")
+    public ResponseEntity getRegions() {
+        
+        return new ResponseEntity<>(coronaCaseService.getRegions(), HttpStatus.OK);
+    }
    
 
 }

@@ -6,6 +6,7 @@
 package com.ligadata.coronacases.dao;
 
 import com.ligadata.coronacases.helpermodel.CountryPagination;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,4 +16,6 @@ import java.util.Map;
 public interface ICoronaCaseDao {
     
     public CountryPagination filterAllRewards(int pageNumber, int maxRes, Map<String, String[]> filters);
+    
+    public List<String> getRegions();
 }
