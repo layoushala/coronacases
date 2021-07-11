@@ -35,13 +35,20 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
     @Override
     public CountryPagination filterAllRewards(int pageNumber, int maxRes, Map<String, String[]> filters) {
         String filterValue = "";
+        String orderBy ="";
         for (Map.Entry<String, String[]> entry : filters.entrySet()) {
             String filterId = entry.getKey();
            
+            if (filterId.equals("sortField")) {
+                String sortValue = entry.getValue()[0];
+                sortValue = (sortValue == null) ? "" : sortValue.trim();
+                orderBy = "order by "+ sortValue +" "+ filters.get("sortOrder")[0];
+
+            }
             if (filterId.equals("region")) {
                 filterValue = entry.getValue()[0];
                 filterValue = (filterValue == null) ? "" : filterValue.trim();
-                break;
+                
 
             }
         }
@@ -74,14 +81,7 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
                 + "FROM    tbl_corona_cases c where region LIKE '" + "%" + filterValue + "%" + "'\n"
                 + "GROUP BY country) b;");
         Integer totalResults = ((BigInteger) countQuery.uniqueResult()).intValue();
-        Query query = session.createSQLQuery("SELECT  country,\n"
-                + "    sum(\n"
-                + "        CASE \n"
-                + "            WHEN c.name='Death Cases' \n"
-                + "            THEN c.value \n"
-                + "            ELSE NULL \n"
-                + "        END\n"
-                + "    ) AS 'deathCases',\n"
+        Query query = session.createSQLQuery("SELECT * From ( SELECT  country,\n"              
                 + "    sum(\n"
                 + "        CASE \n"
                 + "            WHEN c.name='Confirmed Cases'  \n"
@@ -95,9 +95,16 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
                 + "            THEN c.value \n"
                 + "            ELSE NULL \n"
                 + "        END\n"
-                + "    ) AS 'recoveredCases'\n"
+                + "    ) AS 'recoveredCases',\n"
+                + "    sum(\n"
+                + "        CASE \n"
+                + "            WHEN c.name='Death Cases' \n"
+                + "            THEN c.value \n"
+                + "            ELSE NULL \n"
+                + "        END\n"
+                + "    ) AS 'deathCases'\n"
                 + "FROM  tbl_corona_cases c where region LIKE '" + "%" + filterValue + "%" + "'\n"
-                + "GROUP BY country LIMIT " + (pageNumber) + ", " + maxRes);
+                + "GROUP BY country) b "+orderBy+" LIMIT " + ((pageNumber -1)*maxRes) + ", " + maxRes);
         query.setResultTransformer(Transformers.aliasToBean(CountryCase.class));
         List<CountryCase> countryList = (List<CountryCase>) query.list();
         int id = pageNumber * maxRes;
