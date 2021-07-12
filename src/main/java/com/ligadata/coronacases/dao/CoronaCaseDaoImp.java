@@ -46,8 +46,12 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
 
                 if (filterId.equals("sortField")) {
                     String sortValue = entry.getValue()[0];
-                    sortValue = (sortValue == null) ? "" : sortValue.trim();
-                    orderBy = "order by " + sortValue + " " + filters.get("sortOrder")[0];
+                   
+                    if(sortValue != ""){
+                       sortValue = sortValue.trim();
+                       orderBy = "order by " + sortValue + " " + filters.get("sortOrder")[0];
+                    }
+                    
 
                 }
                 if (filterId.equals("region")) {
