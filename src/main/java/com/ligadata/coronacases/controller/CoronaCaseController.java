@@ -6,6 +6,7 @@
 package com.ligadata.coronacases.controller;
 
 import com.ligadata.coronacases.helpermodel.CountryPagination;
+import com.ligadata.coronacases.logger.LogFile;
 import com.ligadata.coronacases.service.ICoronaCaseService;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,14 @@ public class CoronaCaseController {
 
     @Autowired
     ICoronaCaseService coronaCaseService;
+    
+    @Autowired
+    LogFile log;
 
     @GetMapping
-    public ResponseEntity filterCountry(@RequestParam(name = "start") int pageNumber, @RequestParam(name = "size") int maxRes, HttpServletRequest request) {
-        CountryPagination countryPagination = coronaCaseService.filterAllRewards(pageNumber, maxRes, request.getParameterMap());
+    public ResponseEntity filterCoronaCases(@RequestParam(name = "start") int pageNumber, @RequestParam(name = "size") int maxRes, HttpServletRequest request) {
+        
+        CountryPagination countryPagination = coronaCaseService.filterCoronaCases(pageNumber, maxRes, request.getParameterMap());
         return new ResponseEntity<>(countryPagination, HttpStatus.OK);
     }
     
@@ -44,7 +49,7 @@ public class CoronaCaseController {
     
     @GetMapping("/regions")
     public ResponseEntity getRegions() {
-        
+       
         return new ResponseEntity<>(coronaCaseService.getRegions(), HttpStatus.OK);
     }
    

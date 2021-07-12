@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface ICoronaCaseDao {
     
-    public CountryPagination filterAllRewards(int pageNumber, int maxRes, Map<String, String[]> filters);
+    public CountryPagination filterCoronaCases(int pageNumber, int maxRes, Map<String, String[]> filters);
     
     public List<CoronaCase> countryDetials(String country);
     
