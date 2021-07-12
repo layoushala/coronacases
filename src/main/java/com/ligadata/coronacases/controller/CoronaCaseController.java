@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,12 @@ public class CoronaCaseController {
     public ResponseEntity filterCountry(@RequestParam(name = "start") int pageNumber, @RequestParam(name = "size") int maxRes, HttpServletRequest request) {
         CountryPagination countryPagination = coronaCaseService.filterAllRewards(pageNumber, maxRes, request.getParameterMap());
         return new ResponseEntity<>(countryPagination, HttpStatus.OK);
+    }
+    
+    @GetMapping("/country-details/{countryName}")
+    public ResponseEntity countryDetials(@PathVariable String countryName) {
+        
+        return new ResponseEntity<>(coronaCaseService.countryDetials(countryName), HttpStatus.OK);
     }
     
     @GetMapping("/regions")

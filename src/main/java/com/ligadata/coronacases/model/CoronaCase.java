@@ -30,7 +30,7 @@ public class CoronaCase implements Serializable{
     
     @Id
     @Basic(optional = false)
-    @Column(name = "reward_id")
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     
@@ -48,7 +48,6 @@ public class CoronaCase implements Serializable{
     
     @Basic(optional = false)
     @Column(name = "date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     
     @Basic(optional = false)

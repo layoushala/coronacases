@@ -6,6 +6,7 @@
 package com.ligadata.coronacases.service;
 
 import com.ligadata.coronacases.helpermodel.CountryPagination;
+import com.ligadata.coronacases.model.CoronaCase;
 import java.util.List;
 import java.util.Map;
 
@@ -16,5 +17,8 @@ import java.util.Map;
 public interface ICoronaCaseService {
     
     public CountryPagination filterAllRewards(int pageNumber, int maxRes, Map<String, String[]> filters);
+    
+     public List<CoronaCase> countryDetials(String country);
+     
     public List<String> getRegions();
 }

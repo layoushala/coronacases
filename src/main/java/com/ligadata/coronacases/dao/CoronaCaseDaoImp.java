@@ -17,6 +17,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,14 @@ public class CoronaCaseDaoImp implements ICoronaCaseDao {
     public List<String> getRegions() {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(CoronaCase.class);
         criteria.setProjection(Projections.distinct( Projections.property( "region" ) ) );
+        
+        return criteria.list();
+    }
+
+    @Override
+    public List<CoronaCase> countryDetials(String country) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(CoronaCase.class);
+        criteria.add(Restrictions.eq("country", country));
         
         return criteria.list();
     }
